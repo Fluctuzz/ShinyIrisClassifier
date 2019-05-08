@@ -6,7 +6,7 @@ library(rpart.plot)
 data("iris")
 fit <- rpart(formula = Species ~ ., data = iris, method = "class", control=rpart.control(cp=0.05))
 names(iris) <- gsub(".", " ", names(iris), fixed= TRUE)
-# Define server logic required to draw a histogram
+
 shinyServer(function(input, output) {
     output$resultFlower <- renderText({
         pred <- predict(fit, newdata =  data.frame("Sepal.Width" = c(1), "Sepal.Length" = c(1),
@@ -21,7 +21,7 @@ shinyServer(function(input, output) {
   output$flowerPlot <- renderPlot({
     
     
-    # draw the histogram with the specified number of bins
+  
     xvar <- iris[, as.numeric(input$selX)]
     yvar <- iris[, as.numeric(input$selY)]
     
@@ -29,7 +29,6 @@ shinyServer(function(input, output) {
         xlab(paste0(names(iris)[as.numeric(input$selX)], " in cm")) +
         ylab(paste0(names(iris)[as.numeric(input$selY)], " in cm"))+
          geom_point()
-   # rpart.plot(fit, extra = 0)
   })
   
 })
